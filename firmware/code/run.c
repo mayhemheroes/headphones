@@ -120,6 +120,13 @@ static void _as_audio_packet(struct usb_endpoint *ep) {
 
     // Block until core 1 has finished transforming the data
     uint32_t ready = multicore_fifo_pop_blocking();
+    
+    // Swap left and right channels.
+    for (int i = 0; i < samples; i += 2) {
+        int32_t temp = out[i];
+        out[i] = out[i+1];
+        out[i+1] = temp;
+    }
 
     i2s_stream_write(&i2s_write_obj, userbuf, samples * 4);
 
