@@ -101,7 +101,7 @@ static void _as_audio_packet(struct usb_endpoint *ep) {
     int samples = usb_buffer->data_len / 2;
 
     for (int i = 0; i < samples; i++)
-        out[i] = in[i];
+        out[i] = in[i] / 4;
 
     multicore_fifo_push_blocking(CORE0_READY);
     multicore_fifo_push_blocking(samples);
@@ -120,6 +120,9 @@ static void _as_audio_packet(struct usb_endpoint *ep) {
 
     // Block until core 1 has finished transforming the data
     uint32_t ready = multicore_fifo_pop_blocking();
+
+    for (int i = 0; i < samples; i++)
+        out[i] = out[i] * 1;
 
     i2s_stream_write(&i2s_write_obj, userbuf, samples * 4);
 
