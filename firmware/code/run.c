@@ -211,7 +211,7 @@ void setup() {
     // The PCM3060 supports standard mode (100kbps) or fast mode (400kbps)
     // we run in fast mode so we dont block the core for too long while
     // updating the volume.
-    i2c_init(i2c0, 400000);
+    i2c_init(i2c0, 50000);
     gpio_set_function(PCM3060_SDA_PIN, GPIO_FUNC_I2C);
     gpio_set_function(PCM3060_SCL_PIN, GPIO_FUNC_I2C);
     gpio_pull_up(PCM3060_SDA_PIN);
