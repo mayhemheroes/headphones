@@ -1,0 +1,5 @@
+project: headphones
+target: fuzzme
+
+cmds:
+  - cmd: /fuzzme @@
